@@ -10,7 +10,7 @@ In order to achieve the best performance, you should have Cuda and tensorflow-gp
 
 #### Graduate pedestrian
 
-[![Watch the video](https://i9.ytimg.com/vi/CF_UPJvWr-s/mq1.jpg?sqp=COjT7pcG&rs=AOn4CLBR2yVAPbF6F7rqkYxeudTkc0KwOA)](https://www.youtube.com/watch?v=CF_UPJvWr-s&ab_channel=NatthasathSaksupanara)
+<p align="center"> <img src="inputs/graduate-pedestrian.gif"/> </p>
 
 #### Counting pedestrains 
 
