@@ -117,6 +117,76 @@ The YOLO algorithm impementation  - [Darkflow](https://github.com/thtrieu/darkfl
 ### Deep Sort 
 Object tracking and counting - [SORT](https://github.com/abewley/sort)
 
+## Modifications for Graduate Student Diploma Counting
+
+This fork has been modified to count graduating students collecting their diplomas during commencement ceremonies. The key enhancement ensures that each student is counted only once when crossing the virtual line, preventing double-counting if they step backward.
+
+### Modified Files
+
+**`object_counting_api.py`** - Main implementation file for one-way counting logic
+
+### Summary of Changes
+
+#### 1. One-Way Counting Implementation (Lines 142, 191-196)
+
+**Line 142** - Added object tracking list:
+```python
+detect = []
+```
+- Stores IDs of objects that have already crossed the line
+- Prevents duplicate counting when objects move backward
+
+**Lines 191-196** - Modified line-crossing detection logic:
+```python
+if intersect(p0, p1, line[0], line[1]):
+    if indexIDs[i] not in detect:
+        counter += 1
+        detect.append(indexIDs[i])
+        print(indexIDs[i])
+        print(detect)
+```
+- **Line 191**: Detects when a person's path crosses the virtual line
+- **Line 192**: Checks if person's ID is NOT in the `detect` list (new check)
+- **Line 193**: Increments counter only for first-time crossings
+- **Line 194**: Records the person's ID to prevent future counting
+- **Lines 195-196**: Debug output to track counted IDs
+
+#### 2. Additional Improvements
+
+**Lines 136-138, 207** - Disabled video output writing for improved performance:
+```python
+# fps, height, width = get_output_fps_height_and_width(cap)
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+# output_movie = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+```
+
+**Lines 212-213** - Added pause functionality:
+```python
+if cv2.waitKey(1) & 0xFF == ord(' '):
+    cv2.waitKey(0)
+```
+- Press spacebar to pause video during processing
+- Press 'q' to quit
+
+**Line 230** - Changed video source to camera:
+```python
+cap = cv2.VideoCapture(0)  # Live camera feed instead of file
+```
+
+### How It Works
+
+The one-way counting algorithm ensures accurate diploma collection tracking:
+
+1. YOLO detects and tracks each student with a unique ID
+2. When a student crosses the red line, the system checks if their ID exists in the `detect` list
+3. If it's their first crossing, increment the counter and add their ID to `detect`
+4. If they step backward over the line, their ID is already in `detect`, so no increment occurs
+5. Result: Each student is counted exactly once
+
+### Original Repository
+
+Forked from: [tugot17/YOLO-Object-Counting-API](https://github.com/tugot17/YOLO-Object-Counting-API)
+
 ## Images and Videos sources
 Highway surveillance [video](https://www.youtube.com/watch?v=PJ5xXXcfuTc)
 
